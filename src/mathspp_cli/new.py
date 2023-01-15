@@ -2,7 +2,6 @@
 
 import datetime
 import string
-from typing import Optional
 
 import typer
 from jinja2 import Environment, PackageLoader, select_autoescape
@@ -35,6 +34,7 @@ def _create_article(
     path_prefix: str = "",
 ):
     date = datetime.datetime.now().strftime("%d-%m-%Y")
+    slug = slug if slug else to_slug(title)
     tags = sorted(set(tags))
     categories = sorted(set(categories + ["blogpost"]))
 
@@ -70,11 +70,11 @@ def article(
     category: list[str] = typer.Option(list, help="Categories for the article."),
 ):
     _create_article(
-        title=title,
-        slug=slug,
-        description=description,
-        tags=tag,
         categories=category,
+        description=description,
+        slug=slug,
+        tags=tag,
+        title=title,
     )
 
 
@@ -89,9 +89,10 @@ def pydont(
     categories = category + ["pydont"]
     tags = tag + ["python"]
     _create_article(
-        title=title,
-        slug=slug,
-        description=description,
-        tags=tags,
         categories=categories,
+        description=description,
+        path_prefix="pydonts/",
+        slug=slug,
+        tags=tags,
+        title=title,
     )
