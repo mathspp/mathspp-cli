@@ -1,3 +1,5 @@
+"""Module defining the command `mathspp config`."""
+
 import configparser
 from pathlib import Path
 

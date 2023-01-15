@@ -1,0 +1,14 @@
+date: {{ date }}
+metadata:
+    author: Rodrigo Girão Serrão
+    description: "{{ description }}"
+    og:image: "https://mathspp.com/blog/{{ path }}/thumbnail.png"
+    twitter:image: "https://mathspp.com/blog/{{ path }}/thumbnail.png"
+slug: "{{ title|to_slug }}"
+taxonomy:
+    category:{% for category in categories %}
+        - {{ category }}
+    {% endfor %}
+    tag:{% for tag in tags %}
+        - {{ tag }}{% endfor %}
+title: {{ title }}

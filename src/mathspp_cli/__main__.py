@@ -1,14 +1,9 @@
 import typer
 
 from .config import app as config_app
+from .new import app as new_app
 
 app = typer.Typer()
-
-
-
-@app.command()
-def new():
-    print("Creating something new.")
 
 
 @app.command()
@@ -17,6 +12,7 @@ def stats():
 
 
 app.add_typer(config_app, name="config")
+app.add_typer(new_app, name="new")
 
 
 if __name__ == "__main__":
