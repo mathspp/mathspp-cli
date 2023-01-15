@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "mathspp-cli"
+version = "0.1.0"
+description = "Manage the mathspp blog and site."
+authors = ["rodrigogiraoserrao <5621605+RodrigoGiraoSerrao@users.noreply.github.com>"]
+readme = "README.md"
+packages = [{include = "mathspp_cli"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+typer = "^0.7.0"
+
+[tool.poetry.group.dev.dependencies]
+black = "^22.12.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
