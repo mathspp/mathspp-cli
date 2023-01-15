@@ -43,6 +43,16 @@ def get_config() -> configparser.ConfigParser:
     return config
 
 
+def get_blog_path() -> Path:
+    config = get_config()
+    site_path_str = config["site"]["path"]
+    if not site_path_str:
+        print("Site path not set.")
+        raise typer.Exit(code=1)
+    blog_path = Path(site_path_str) / "pages/02.blog"
+    return blog_path
+
+
 @app.command()
 def read():
     """Read the current configuration."""

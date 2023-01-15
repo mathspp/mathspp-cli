@@ -6,6 +6,8 @@ import string
 import typer
 from jinja2 import Environment, PackageLoader, select_autoescape
 
+from .config import get_blog_path
+
 
 env = Environment(
     loader=PackageLoader("mathspp_cli"),
@@ -32,28 +34,35 @@ def _create_article(
     tags: list[str],
     categories: list[str],
     path_prefix: str = "",
+    site_prefix: str = "",
 ):
     date = datetime.datetime.now().strftime("%d-%m-%Y")
     slug = slug if slug else to_slug(title)
     tags = sorted(set(tags))
     categories = sorted(set(categories + ["blogpost"]))
 
+    blog_path = get_blog_path()
+    article_path = blog_path / path_prefix / slug
+    article_path.mkdir()
+
     frontmatter = env.get_template("frontmatter.yaml.template")
-    with open("C:/tmp/test.yaml", "w") as f:
+    frontmatter_path = article_path / "frontmatter.yaml"
+    with open(frontmatter_path, "w") as f:
         f.write(
             frontmatter.render(
                 categories=categories,
                 date=date,
                 description=description,
-                path_prefix=path_prefix,
+                site_prefix=site_prefix,
+                slug=slug,
                 tags=tags,
                 title=title,
-                slug=slug,
             )
         )
 
     item = env.get_template("item.md.template")
-    with open("C:/tmp/item_test.yaml", "w") as f:
+    item_path = article_path / "item.md"
+    with open(item_path, "w") as f:
         f.write(
             item.render(
                 description=description,
@@ -91,7 +100,8 @@ def pydont(
     _create_article(
         categories=categories,
         description=description,
-        path_prefix="pydonts/",
+        path_prefix="01.pydonts/",
+        site_prefix="pydonts/",
         slug=slug,
         tags=tags,
         title=title,
